@@ -1,2 +1,4 @@
 /build
 /consumer-rules.pro
+/src/androidTest/java/com/kuma/kumaadf/
+/src/test/java/com/kuma/kumaadf/ExampleUnitTest.java
