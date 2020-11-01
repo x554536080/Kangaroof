@@ -1,0 +1,3 @@
+include ':KumaADF'
+include ':app'
+rootProject.name = "Kangaroof"

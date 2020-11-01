@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <title>Web页面</title>
+
+
+        <style type="text/css">
+            html,body{
+                width:100%;
+                height:100%;
+                padding:0px;
+                margin:0px;
+            }
+            div.contact{
+                margin:3px;
+                position:relative;
+                text-align: center;
+                width:100%;
+                height:40px;
+                background-color:#e0dede;
+            }
+        </style>
+
+        <script type="text/javascript">
+            //保存模板html代码
+            var template;
+
+            //让java调用,生成联系人数据
+            function show(arr){
+                for(var i=0;i<arr.length;i++){
+                    var innerHtml = document.body.innerHTML;
+                    //利用模板替换生成每条数据
+                    var row = template;
+                    row = row.replace('name',arr[i].name);
+                    row = row.replace('amount',arr[i].amount);
+                    row = row.replace('phone',arr[i].phone);
+                    row = row.replace('phone',arr[i].phone);
+                    //将html拼接到body标签中
+                    document.body.innerHTML = innerHtml+row;
+                }
+            }
+
+            //初始化并且调用showcontacts去java请求数据
+            function initContacts(){
+                template = document.body.innerHTML;
+                document.body.innerHTML = "";
+                contact.showcontacts();
+            }
+
+            //按钮点击 时调用java的call
+            function call(phone){
+                contact.call(phone);
+            }
+
+            //页面加载时调用
+            // window.onload = initContacts();
+
+        </script>
+
+    </head>
+
+    <body onload="initContacts()">
+
+        <!-- 模板项 -->
+        <div class="contact">
+            <span style="position:absolute;left:5px">name</span>
+            <span style="position:absolute;top:20px;left:5px;font-size: 15px">amount</span>
+            <span style="position:relative;top:5px;">phone</span>
+            <button style="position:absolute;top:5px;right:5px" onclick="call('phone')">拨号</button>
+        </div>
+
+    </body>
+
+</html>
