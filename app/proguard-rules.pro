@@ -35,6 +35,8 @@
 #
 #############################################
 
+-keep class tv.danmaku.ijk.media.player.**{ *; }
+
 
 # IData 接口标识的类
 -keep class com.kuma.kumaadf.data.IData {*;}

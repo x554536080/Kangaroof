@@ -9,4 +9,5 @@ package com.kuma.kumaadf.data;
  * # ********************************
  */
 public interface IData {
+
 }
