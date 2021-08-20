@@ -1,4 +1,4 @@
 include ':KumaMedia'
-include ':KumaADF'
+include ':KumaBase'
 include ':app'
 rootProject.name = "Kangaroof"

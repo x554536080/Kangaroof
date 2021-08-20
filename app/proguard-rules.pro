@@ -39,8 +39,8 @@
 
 
 # IData 接口标识的类
--keep class com.kuma.kumaadf.data.IData {*;}
--keep class * implements com.kuma.kumaadf.data.IData {*;}
+-keep class com.kuma.base.data.IData {*;}
+-keep class * implements com.kuma.base.data.IData {*;}
 
 
 

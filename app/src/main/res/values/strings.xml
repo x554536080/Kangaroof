@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Kangaroof</string>
+
+    <!--主页功能-->
+    <string name="main_func_1">天气预报</string>
+    <string name="main_func_2">飞叶读条</string>
+    <string name="main_func_3">更换背景</string>
 </resources>
