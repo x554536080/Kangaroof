@@ -1,42 +1,44 @@
 package com.kuma.kangaroof;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.blankj.utilcode.constant.PermissionConstants;
-import com.blankj.utilcode.util.PermissionUtils;
-import com.kuma.kangaroof.ui.weather.WeatherActivity;
+import com.google.android.material.appbar.AppBarLayout;
+import com.kuma.base.KumaBaseActivity;
+import com.kuma.base.util.CameraUtils;
+import com.kuma.kangaroof.business.weather.ui.weather.WeatherActivity;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+import static com.kuma.base.util.CameraUtils.REQUEST_TAKE_PHOTO_NO_FILE;
+import static com.kuma.base.util.CameraUtils.REQUEST_TAKE_PHOTO_WITH_FILE;
 
-    private final int REQUEST_TAKE_PHOTO = 1000;
+public class MainActivity extends KumaBaseActivity {
+
+    private boolean drawerOpened = true;
+
+    String currentPhotoPath;
+    boolean saveToLocal;
+
+    AppBarLayout appBarLayout;
+    Toolbar toolbar;
 
     Button button1;
     Button button2;
     Button button3;
+    Button button4;
 
     ImageView bgTop;
     ImageView bgBottom;
@@ -46,15 +48,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
     }
 
     private void init() {
+        appBarLayout = findViewById(R.id.main_appBar);
+        toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         button1 = findViewById(R.id.main_button_1);
         button2 = findViewById(R.id.main_button_2);
         button3 = findViewById(R.id.main_button_3);
+        button4 = findViewById(R.id.main_button_4);
         button1.setOnClickListener(onClickListener);
         button2.setOnClickListener(onClickListener);
         button3.setOnClickListener(onClickListener);
+        button4.setOnClickListener(onClickListener);
+        button3.setOnLongClickListener(onLongClickListener);
 
         bgBottom = findViewById(R.id.main_bottom_bg);
     }
@@ -66,67 +78,49 @@ public class MainActivity extends AppCompatActivity {
         if (v == button2) {
             startActivity(new Intent(this, LeafActivity.class));
         }
-        if (v == button2) {
-            takePicture();
+        if (v == button3) {
+            currentPhotoPath = CameraUtils.takePhoto(saveToLocal, this);
+        }
+        if (v == button4) {
+            startActivity(new Intent(this, PlayerActivity.class));
         }
     };
 
-    public void leaf(View view) {
-        startActivity(new Intent(this, LeafActivity.class));
-    }
+    private final View.OnLongClickListener onLongClickListener = v -> {
+        if (v == button3) {
+            saveToLocal = !saveToLocal;
+            Toast.makeText(MainActivity.this, saveToLocal + "", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    };
 
-    private void takePicture() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.kuma.kangaroof.fileprovider",
-                        photoFile);
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (drawerOpened) {
+                appBarLayout.setExpanded(false);
+                drawerOpened = false;
+            } else {
+                appBarLayout.setExpanded(true);
+                drawerOpened = true;
             }
         }
+        return super.onOptionsItemSelected(item);
     }
 
-    String currentPhotoPath;
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                Locale.getDefault()).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_TAKE_PHOTO_NO_FILE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            bgBottom.setImageBitmap(imageBitmap);
+        } else if (requestCode == REQUEST_TAKE_PHOTO_WITH_FILE && resultCode == RESULT_OK) {
             try {
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                bgBottom.setImageBitmap(imageBitmap);
-
-//
                 FileInputStream fis = new FileInputStream(currentPhotoPath);
-//                Bitmap bitmap = BitmapFactory.decodeStream(fis);
-//                imageView2.setImageBitmap(bitmap);
+                Bitmap bitmap = BitmapFactory.decodeStream(fis);
+                bgBottom.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

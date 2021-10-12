@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kuma.base">
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <activity android:name="com.kuma.base.KumaBaseActivity" />
+        <activity
+            android:name="widget.sun.floatwindow.MainActivity"
+            android:launchMode="singleTask" />
+
+        <service
+            android:name="widget.sun.floatwindow.FloatWindowService"
+            android:enabled="true"
+            android:exported="true" />
+
+    </application>
+
+</manifest>

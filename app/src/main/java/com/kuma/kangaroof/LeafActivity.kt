@@ -19,6 +19,7 @@ class LeafActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     private class MyHandler(activity: LeafActivity?) : Handler() {
         //持有弱引用HandlerActivity，GC回收时会被回收掉
         private val mActivity: WeakReference<LeafActivity> = WeakReference<LeafActivity>(activity)
+
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
 
