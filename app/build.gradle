@@ -35,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    sourceSets{
+        main.jniLibs.srcDirs = ['libs']
+    }
 }
 
 dependencies {
@@ -58,6 +62,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.permissionx.guolindev:permissionx:1.4.0'
+    implementation "org.reactivestreams:reactive-streams:1.0.2"
+
 }
 
 repositories {

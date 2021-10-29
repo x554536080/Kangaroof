@@ -18,6 +18,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.kuma.base.KumaBaseActivity;
 import com.kuma.base.util.CameraUtils;
 import com.kuma.kangaroof.business.weather.ui.weather.WeatherActivity;
+import com.kuma.kangaroof.dustbin.TestA1;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -49,6 +50,11 @@ public class MainActivity extends KumaBaseActivity {
         setContentView(R.layout.activity_main);
         init();
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     private void init() {
