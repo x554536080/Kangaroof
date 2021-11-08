@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 import com.kuma.base.KumaBaseActivity;
 import com.kuma.base.util.CameraUtils;
 import com.kuma.kangaroof.business.weather.ui.weather.WeatherActivity;
-import com.kuma.kangaroof.dustbin.TestA1;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,12 +44,13 @@ public class MainActivity extends KumaBaseActivity {
     ImageView bgTop;
     ImageView bgBottom;
 
+    TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_main);
         init();
-
     }
 
     @Override
@@ -75,6 +76,7 @@ public class MainActivity extends KumaBaseActivity {
         button3.setOnLongClickListener(onLongClickListener);
 
         bgBottom = findViewById(R.id.main_bottom_bg);
+
     }
 
     private View.OnClickListener onClickListener = v -> {

@@ -1,0 +1,12 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="area_entries">
+        <item>国内</item>
+        <item>非国内</item>
+    </string-array>
+
+    <string-array name="area_values">
+        <item>native</item>
+        <item>native_non</item>
+    </string-array>
+</resources>

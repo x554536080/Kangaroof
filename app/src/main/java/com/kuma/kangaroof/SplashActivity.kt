@@ -47,7 +47,7 @@ class SplashActivity : AppCompatActivity() {
      * 跳转主界面
      */
     fun startMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, PagerMainActivity::class.java))
         finish()
     }
 
