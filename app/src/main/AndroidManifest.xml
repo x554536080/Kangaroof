@@ -16,7 +16,7 @@
             android:launchMode="singleTask" />
         <activity android:name=".dustbin.TestA1" />
         <activity android:name=".dustbin.TestA3" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
