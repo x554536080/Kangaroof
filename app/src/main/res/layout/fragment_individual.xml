@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:id="@+id/fragment_individual_person_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bg_gradient_individual"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/fragment_individual_login_rl"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="60dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginVertical="40dp"
+                android:layout_marginEnd="25dp"
+                android:padding="9dp"
+                android:alpha="0.8"
+                android:src="@drawable/ic_right_arrow" />
+
+            <TextView
+                android:id="@+id/fragment_individual_login_status_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:gravity="bottom"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="1dp"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:alpha="0.9"
+                tools:text="未登录"
+                android:layout_toEndOf="@id/fragment_individual_login_iv"/>
+
+            <ImageView
+                android:id="@+id/fragment_individual_login_iv"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginVertical="20dp"
+                android:layout_marginStart="20dp"
+                android:alpha="0.8"
+                android:padding="18dp"
+                android:src="@drawable/ic_login" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_marginHorizontal="12dp"
+            android:background="@drawable/shape_bg_white_corner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginVertical="25dp" />
+
+        <LinearLayout
+            android:layout_marginHorizontal="12dp"
+            android:background="@drawable/shape_bg_white_corner"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_marginVertical="25dp" />
+
+        <LinearLayout
+            android:layout_marginHorizontal="12dp"
+            android:background="@drawable/shape_bg_white_corner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginVertical="25dp" />
+
+        <LinearLayout
+            android:layout_marginHorizontal="12dp"
+            android:background="@drawable/shape_bg_white_corner"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginVertical="25dp" />
+
+
+
+    </LinearLayout>
+
+</ScrollView>

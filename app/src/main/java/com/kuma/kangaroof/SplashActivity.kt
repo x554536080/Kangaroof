@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
+import com.kuma.base.KumaBaseActivity
 import com.permissionx.guolindev.PermissionX
 import java.lang.ref.WeakReference
 
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : KumaBaseActivity() {
 
     private class MyHandler(activity: SplashActivity?) : Handler() {
         //持有弱引用HandlerActivity，GC回收时会被回收掉

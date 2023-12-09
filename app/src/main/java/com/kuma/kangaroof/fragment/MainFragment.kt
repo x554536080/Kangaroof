@@ -1,4 +1,4 @@
-package com.kuma.kangaroof.fragments
+package com.kuma.kangaroof.fragment
 
 import android.content.Intent
 import android.os.Bundle

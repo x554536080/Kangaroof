@@ -20,7 +20,7 @@
         android:layout_gravity="bottom"
         android:background="@drawable/main_tabs_bg"
         android:elevation="6dp"
-        app:tabRippleColor="#0000"
+        app:tabRippleColor="@null"
         app:tabMode="fixed">
 
     </com.google.android.material.tabs.TabLayout>

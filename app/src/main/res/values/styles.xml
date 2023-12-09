@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -9,6 +9,11 @@
 
     <style name="TransparentStatusBarTheme" parent="AppTheme">
         <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="colorControlNormal">#ddd</item>
+        <item name="colorControlActivated">#ddd</item>
     </style>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.kuma.kangaroof.fragments
+package com.kuma.kangaroof.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.kuma.kangaroof.R
-import com.kuma.kangaroof.fragments.dummy.DummyContent
+import com.kuma.kangaroof.fragment.dummy.DummyContent
 
 /**
  * A fragment representing a list of Items.

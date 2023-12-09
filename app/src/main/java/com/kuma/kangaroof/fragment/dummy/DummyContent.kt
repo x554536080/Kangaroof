@@ -1,4 +1,4 @@
-package com.kuma.kangaroof.fragments.dummy
+package com.kuma.kangaroof.fragment.dummy
 
 import java.util.ArrayList
 import java.util.HashMap

@@ -2,19 +2,15 @@ package com.kuma.kangaroof
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.kuma.kangaroof.fragments.MainFragment
-import com.kuma.kangaroof.fragments.MessageFragment
-import com.kuma.kangaroof.fragments.SettingsFragment
-import com.kuma.kangaroof.fragments.SocialFragment
+import com.kuma.base.KumaBaseActivity
+import com.kuma.kangaroof.fragment.*
 import com.kuma.kangaroof.ui.NoAnimationViewPager
 import kotlinx.android.synthetic.main.activity_pager_main.*
 
-class PagerMainActivity : AppCompatActivity() {
+class PagerMainActivity : KumaBaseActivity() {
     lateinit var tabs: TabLayout
     lateinit var viewPager: NoAnimationViewPager
     var fragments: MutableList<Fragment> = mutableListOf()
@@ -32,7 +28,7 @@ class PagerMainActivity : AppCompatActivity() {
         fragments.add(MainFragment())
         fragments.add(SocialFragment())
         fragments.add(MessageFragment())
-        fragments.add(SettingsFragment())
+        fragments.add(IndividualFragment())
         titles.add("首页");
         titles.add("社区");
         titles.add("消息");

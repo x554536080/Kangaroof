@@ -6,7 +6,8 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
-        <activity android:name="com.kuma.base.KumaBaseActivity" />
+        <activity
+            android:name="com.kuma.base.KumaBaseActivity"/>
         <activity
             android:name="widget.sun.floatwindow.MainActivity"
             android:launchMode="singleTask" />

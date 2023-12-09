@@ -1,4 +1,4 @@
-package com.kuma.kangaroof.fragments
+package com.kuma.kangaroof.fragment
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.kuma.kangaroof.R
 
-import com.kuma.kangaroof.fragments.dummy.DummyContent.DummyItem
+import com.kuma.kangaroof.fragment.dummy.DummyContent.DummyItem
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].

@@ -1,4 +1,4 @@
-package com.kuma.kangaroof.fragments
+package com.kuma.kangaroof.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -34,6 +34,10 @@ class SocialFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_social, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
     }
 
     companion object {

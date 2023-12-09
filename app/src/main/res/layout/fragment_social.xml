@@ -4,12 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".fragments.SocialFragment">
+    tools:context=".fragment.SocialFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <com.kuma.kangaroof.ui.MyViewPagerCraft
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="社区" />
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
