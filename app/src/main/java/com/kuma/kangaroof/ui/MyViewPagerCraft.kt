@@ -4,11 +4,11 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.Scroller
 
 /**
  * currently 3 childViews
@@ -23,6 +23,8 @@ class MyViewPagerCraft : ViewGroup {
     private var container0ne: FrameLayout = FrameLayout(context)
     private var containerTwo: FrameLayout = FrameLayout(context)
     private var containerThree: FrameLayout = FrameLayout(context)
+
+    private val scroller = Scroller(context, AccelerateDecelerateInterpolator())
 
     init {
         container0ne.setBackgroundColor(Color.parseColor("#ff7f00"))
@@ -67,6 +69,7 @@ class MyViewPagerCraft : ViewGroup {
 
     var startH = 0
     var startV = 0
+    var currentPage = 2
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -74,16 +77,69 @@ class MyViewPagerCraft : ViewGroup {
                 startV = event.y.toInt()
             }
             MotionEvent.ACTION_MOVE -> {
-                (parent as View)//md 这个到底是什么
-                    .scrollBy((startH/**/ - event.x).toInt(), 0)
-                Log.d(TAG,"startH=$startH,event.x=${event.x}")
+                scrollBy(-(event.x - startH).toInt(), 0)
+                startH = event.x.toInt()
+            }
+            MotionEvent.ACTION_UP -> {
+                if (currentPage == 1) {
+                    if (scrollX > -measuredWidth / 6) {
+                        scroller.startScroll(scrollX, scrollY, -scrollX, 0, 300)
+                        invalidate()
+                        currentPage = 2
+                        return true
+                    } else {
+                        scroller.startScroll(scrollX, scrollY, -scrollX - measuredWidth / 3, 0, 300)
+                        invalidate()
+                        return true
+                    }
+                }
+                if (currentPage == 2) {
+                    if (scrollX > measuredWidth / 6) {
+                        scroller.startScroll(scrollX, scrollY, measuredWidth / 3 - scrollX, 0, 300)
+                        invalidate()
+                        currentPage = 3
+                        return true
+                    } else if (scrollX < -measuredWidth / 6) {
+                        scroller.startScroll(
+                            scrollX,
+                            scrollY,
+                            -measuredWidth / 3 - scrollX,
+                            0,
+                            300
+                        )
+                        invalidate()
+                        currentPage = 1
+                        return true
+                    } else {
+                        scroller.startScroll(scrollX, scrollY, -scrollX, 0, 300)
+                        invalidate()
+                        return true
+                    }
+                }
+                if (currentPage == 3) {
+                    if (scrollX < measuredWidth / 6) {
+                        scroller.startScroll(scrollX, scrollY, -scrollX, 0, 300)
+                        invalidate()
+                        currentPage = 2
+                        return true
+                    } else {
+                        scroller.startScroll(scrollX, scrollY, -scrollX + measuredWidth / 3, 0, 300)
+                        invalidate()
+                        return true
+                    }
+
+                }
+
+//                if (addOn < -measuredWidth / 6)
             }
         }
         return true
     }
 
     override fun computeScroll() {
-
-
+        if (scroller.computeScrollOffset()) {
+            scrollTo(scroller.currX, scroller.currY)
+            invalidate()
+        }
     }
 }
