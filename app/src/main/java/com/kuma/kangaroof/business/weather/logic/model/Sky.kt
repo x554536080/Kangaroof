@@ -5,7 +5,7 @@ import com.kuma.kangaroof.R
 /**
  * # ******************************************************************
  * # ClassName:      Sky
- * # Description:    TODO
+ * # Description:    skycon所对应的一些中文描述、
  * # Author:         hmxiong
  * # Version:        Ver 1.0
  * # Create Date     2021/5/21 11:26

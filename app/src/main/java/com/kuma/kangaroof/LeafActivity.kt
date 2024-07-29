@@ -4,9 +4,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.SeekBar
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.kuma.base.util.AnimationUtils.initRotateAnimation
@@ -32,8 +38,10 @@ class LeafActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
                         } else mProgress
                         mProgress += 1
                         //随机800ms以内刷新一次
-                        activity.mHandler.sendEmptyMessageDelayed(REFRESH_PROGRESS,
-                                Random().nextInt(360).toLong())
+                        activity.mHandler.sendEmptyMessageDelayed(
+                            REFRESH_PROGRESS,
+                            Random().nextInt(360).toLong()
+                        )
                         mLeafLoadingView.setProgress(mProgress)
                     }
                 }
@@ -61,6 +69,8 @@ class LeafActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     private val mHandler: MyHandler = MyHandler(this)
 
+    private val data = mutableListOf<String>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,22 +89,28 @@ class LeafActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         mLeafLoadingView = findViewById<View>(R.id.leaf_loading) as LeafLoadingView
 
         mFanView = findViewById(R.id.fan_pic)
-        val rotateAnimation: RotateAnimation = initRotateAnimation(false, 1500, true,
-                Animation.INFINITE)
+        val rotateAnimation: RotateAnimation = initRotateAnimation(
+            false, 1500, true,
+            Animation.INFINITE
+        )
         mFanView?.startAnimation(rotateAnimation)
 
 
         mAmplitudeText = findViewById<View>(R.id.text_ampair) as TextView
-        mAmplitudeText?.text = getString(R.string.current_mplitude,
-                mLeafLoadingView.getMiddleAmplitude())
+        mAmplitudeText?.text = getString(
+            R.string.current_mplitude,
+            mLeafLoadingView.getMiddleAmplitude()
+        )
         mAmplitudeSeekBar = findViewById<View>(R.id.seekBar_ampair) as SeekBar
         mAmplitudeSeekBar?.setOnSeekBarChangeListener(this)
         mAmplitudeSeekBar?.progress = mLeafLoadingView.getMiddleAmplitude()
         mAmplitudeSeekBar?.max = 50
 
         mDisparityText = findViewById<View>(R.id.text_disparity) as TextView
-        mDisparityText!!.text = getString(R.string.current_Disparity,
-                mLeafLoadingView.getMplitudeDisparity())
+        mDisparityText!!.text = getString(
+            R.string.current_Disparity,
+            mLeafLoadingView.getMplitudeDisparity()
+        )
         mDisparitySeekBar = findViewById<View>(R.id.seekBar_distance) as SeekBar
         mDisparitySeekBar?.setOnSeekBarChangeListener(this)
         mDisparitySeekBar?.progress = mLeafLoadingView.getMplitudeDisparity()
@@ -105,16 +121,41 @@ class LeafActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         mFloatTimeSeekBar!!.setOnSeekBarChangeListener(this)
         mFloatTimeSeekBar!!.max = 5000
         mFloatTimeSeekBar!!.progress = mLeafLoadingView.getLeafFloatTime().toInt()
-        mFloatTimeText!!.text = resources.getString(R.string.current_float_time,
-                mLeafLoadingView.getLeafFloatTime())
+        mFloatTimeText!!.text = resources.getString(
+            R.string.current_float_time,
+            mLeafLoadingView.getLeafFloatTime()
+        )
 
         mRotateTimeText = findViewById<View>(R.id.text_rotate_time) as TextView
         mRotateTimeSeekBar = findViewById<View>(R.id.seekBar_rotate_time) as SeekBar
         mRotateTimeSeekBar!!.setOnSeekBarChangeListener(this)
         mRotateTimeSeekBar!!.max = 5000
         mRotateTimeSeekBar!!.progress = mLeafLoadingView.getLeafRotateTime().toInt()
-        mRotateTimeText!!.text = resources.getString(R.string.current_float_time,
-                mLeafLoadingView.getLeafRotateTime())
+        mRotateTimeText!!.text = resources.getString(
+            R.string.current_float_time,
+            mLeafLoadingView.getLeafRotateTime()
+        )
+
+        val leafConfigSpinner = findViewById<Spinner>(R.id.leaf_config_spinner)
+        leafConfigSpinner.adapter =
+            ArrayAdapter(baseContext, R.layout.support_simple_spinner_dropdown_item, data)
+        leafConfigSpinner.onItemSelectedListener = object:OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+        val leafConfigSave = findViewById<Button>(R.id.leaf_config_save)
+        leafConfigSave.setOnClickListener {  }
+
     }
 
     public fun increaseProgress(view: View) {
@@ -129,25 +170,37 @@ class LeafActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         when {
             seekBar === mAmplitudeSeekBar -> {
                 mLeafLoadingView.setAmplitude(progress)
-                mAmplitudeText?.text = getString(R.string.current_mplitude,
-                        progress)
+                mAmplitudeText?.text = getString(
+                    R.string.current_mplitude,
+                    progress
+                )
             }
+
             seekBar === mDisparitySeekBar -> {
                 mLeafLoadingView.setDisparity(progress)
-                mDisparityText?.text = getString(R.string.current_Disparity,
-                        progress)
+                mDisparityText?.text = getString(
+                    R.string.current_Disparity,
+                    progress
+                )
             }
+
             seekBar === mFloatTimeSeekBar -> {
                 mLeafLoadingView.setFloatTime(progress.toLong())
-                mFloatTimeText?.text = resources.getString(R.string.current_float_time,
-                        progress)
+                mFloatTimeText?.text = resources.getString(
+                    R.string.current_float_time,
+                    progress
+                )
             }
+
             seekBar === mRotateTimeSeekBar -> {
                 mLeafLoadingView.setRotateTime(progress.toLong())
-                mRotateTimeText?.text = resources.getString(R.string.current_rotate_time,
-                        progress)
+                mRotateTimeText?.text = resources.getString(
+                    R.string.current_rotate_time,
+                    progress
+                )
             }
         }
+
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {

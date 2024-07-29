@@ -1,14 +1,12 @@
 package com.kuma.kangaroof
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.kuma.base.KumaBaseActivity
 import com.kuma.kangaroof.fragment.*
 import com.kuma.kangaroof.ui.NoAnimationViewPager
-import kotlinx.android.synthetic.main.activity_pager_main.*
 
 class PagerMainActivity : KumaBaseActivity() {
     lateinit var tabs: TabLayout
@@ -28,7 +26,7 @@ class PagerMainActivity : KumaBaseActivity() {
         fragments.add(MainFragment())
         fragments.add(SocialFragment())
         fragments.add(MessageFragment())
-        fragments.add(IndividualFragment())
+        fragments.add(ProfileFragment())
         titles.add("首页");
         titles.add("社区");
         titles.add("消息");
@@ -45,7 +43,9 @@ class PagerMainActivity : KumaBaseActivity() {
 //                .getDrawable(this, R.mipmap.ic_launcher_round)
 //        tabs.addTab(tabIcon)
 
-        main_tabs.setupWithViewPager(viewPager)
+        findViewById<TabLayout>(R.id.main_tabs)
+//        main_tabs
+            .setupWithViewPager(viewPager)
         viewPager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getCount(): Int {
                 return fragments.size

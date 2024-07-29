@@ -1,5 +1,6 @@
 package com.kuma.kangaroof.business.weather.ui.place
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,8 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kuma.kangaroof.Kangaroof
+import com.kuma.kangaroof.KangaroofApp
 import com.kuma.kangaroof.MainActivity
 import com.kuma.kangaroof.R
+import com.kuma.kangaroof.business.weather.WeatherMainActivity
 import com.xds.mvvmdemo.ui.place.PlaceAdapter
 import com.xds.mvvmdemo.ui.place.PlaceViewModel
 import com.kuma.kangaroof.business.weather.ui.weather.WeatherActivity
@@ -44,10 +48,9 @@ class PlaceFragment : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_place, container, false)
         return rootView
     }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (activity is MainActivity && viewModel.isPlaceSaved()) {
+        if (activity is WeatherMainActivity && viewModel.isPlaceSaved()) {
             val place = viewModel.getSavedPlace()
             val intent = Intent(context, WeatherActivity::class.java).apply {
                 putExtra("location_lng", place.location.lng)
@@ -79,21 +82,22 @@ class PlaceFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
+
         viewModel.placeLiveData.observe(
-            viewLifecycleOwner,
-            { result ->
-                val places = result.getOrNull()
-                if (places != null) {
-                    recyclerView.visibility = View.VISIBLE
-                    bgImageView.visibility = View.GONE
-                    viewModel.placeList.clear()
-                    viewModel.placeList.addAll(places)
-                    adapter.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(activity, "未查询到任何地点", Toast.LENGTH_SHORT).show()
-                    result.exceptionOrNull()?.printStackTrace()
-                }
-            })
+            viewLifecycleOwner
+        ) { result ->
+            val places = result.getOrNull()
+            if (places != null) {
+                recyclerView.visibility = View.VISIBLE
+                bgImageView.visibility = View.GONE
+                viewModel.placeList.clear()
+                viewModel.placeList.addAll(places)
+                adapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(activity, "未查询到任何地点", Toast.LENGTH_SHORT).show()
+                result.exceptionOrNull()?.printStackTrace()
+            }
+        }
 
     }
 }

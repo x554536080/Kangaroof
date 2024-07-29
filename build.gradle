@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.6.21'
+    ext.kotlin_version = '1.9.0'
     repositories {
         google()
         jcenter()
@@ -16,8 +16,28 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'androidx.lifecycle'
+                    && !details.requested.name.contains('multidex')
+                    && !details.requested.name.contains('extensions')
+                    && !details.requested.name.contains('savedstate')) {
+                details.useVersion "2.4.0"
+            }
+        }
     }
 }
+
+subprojects {
+
+}
+
+
+
+apply from: "config.gradle"
 
 task clean(type: Delete) {
     delete rootProject.buildDir

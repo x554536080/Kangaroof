@@ -15,7 +15,7 @@ class VerticalScrollView : ScrollView {
         mGestureDetector = GestureDetector(context,YScrollDetector())
     }
 
-    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
         return super.onInterceptTouchEvent(ev)
                 && mGestureDetector.onTouchEvent(ev)
     }
@@ -23,7 +23,7 @@ class VerticalScrollView : ScrollView {
     inner class YScrollDetector:SimpleOnGestureListener(){
         override fun onScroll(
             e1: MotionEvent?,
-            e2: MotionEvent?,
+            e2: MotionEvent,
             distanceX: Float,
             distanceY: Float
         ): Boolean {

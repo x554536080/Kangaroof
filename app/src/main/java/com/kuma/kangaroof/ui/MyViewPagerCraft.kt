@@ -62,19 +62,18 @@ class MyViewPagerCraft : ViewGroup {
         containerThree.layout(measuredWidth / 3 * 2, 0, measuredWidth, measuredHeight)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
 
     }
 
 
+
     var startH = 0
-    var startV = 0
     var currentPage = 2
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 startH = event.x.toInt()
-                startV = event.y.toInt()
             }
             MotionEvent.ACTION_MOVE -> {
                 scrollBy(-(event.x - startH).toInt(), 0)

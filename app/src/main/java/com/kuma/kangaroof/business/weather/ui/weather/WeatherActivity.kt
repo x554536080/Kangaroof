@@ -2,19 +2,19 @@ package com.kuma.kangaroof.business.weather.ui.weather
 
 import android.content.Context
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.kuma.kangaroof.R
-import com.xds.mvvmdemo.logic.model.Weather
 import com.kuma.kangaroof.business.weather.logic.model.getSky
+import com.xds.mvvmdemo.logic.model.Weather
 import com.xds.mvvmdemo.ui.weather.WeatherViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -71,10 +71,11 @@ class WeatherActivity : AppCompatActivity() {
             }
             swipeRefresh.isRefreshing = false
         }
+        refreshWeather(true)
+
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
-        refreshWeather()
         swipeRefresh.setOnRefreshListener {
-            refreshWeather()
+            refreshWeather(false)
         }
 
         navBtn.setOnClickListener {
@@ -90,15 +91,17 @@ class WeatherActivity : AppCompatActivity() {
             override fun onDrawerClosed(drawerView: View) {
                 val manager = getSystemService(Context.INPUT_METHOD_SERVICE)
                         as InputMethodManager
-                manager.hideSoftInputFromWindow(drawerView.windowToken,
-                    InputMethodManager.HIDE_NOT_ALWAYS)
+                manager.hideSoftInputFromWindow(
+                    drawerView.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
             }
         })
     }
 
-    fun refreshWeather() {
+    fun refreshWeather(triggerRefreshStatus: Boolean) {
         viewModel.refreshWeather(viewModel.locationLng, viewModel.locationLat)
-        swipeRefresh.isRefreshing = true
+        swipeRefresh.isRefreshing = triggerRefreshStatus//不能两种刷新同时存在？之前不就是么
     }
 
     private fun showWeatherInfo(weather: Weather) {
@@ -106,9 +109,11 @@ class WeatherActivity : AppCompatActivity() {
 
         val realtime = weather.realtime
         val daily = weather.daily
-        currentTemp.text = "${realtime.temperature.toInt()} ℃"
+        val cTT = "${realtime.temperature.toInt()} ℃"
+        currentTemp.text = cTT
         currentSky.text = getSky(realtime.skycon).info
-        currentAQI.text = "空气指数 ${realtime.airQuality.aqi.chn.toInt()}"
+        val cPM25T = "空气指数 ${realtime.airQuality.aqi.chn.toInt()}"
+        currentAQI.text = cPM25T
 
         nowLayout.setBackgroundResource(getSky(realtime.skycon).bg)
         forecastLayout.removeAllViews()
@@ -129,7 +134,8 @@ class WeatherActivity : AppCompatActivity() {
                 .format(skycon.date)
             skyIcon.setImageResource(getSky(skycon.value).icon)
             skyInfo.text = getSky(skycon.value).info
-            temperatureInfo.text = "${temperature.min.toInt()} ~ ${temperature.max.toInt()} ℃"
+            val tempText = "${temperature.min.toInt()} ~ ${temperature.max.toInt()} ℃"
+            temperatureInfo.text = tempText
 
             forecastLayout.addView(view)
         }
@@ -146,5 +152,9 @@ class WeatherActivity : AppCompatActivity() {
         ultravioletText.text = lifeIndex.ultraviolet[0].desc
         carWashingText.text = lifeIndex.carWashing[0].desc
         weatherLayout.visibility = View.VISIBLE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

@@ -160,7 +160,7 @@ class LeafLoadingView(context: Context, attributeSet: AttributeSet) : View(conte
                 mCurrentProgressPosition.toFloat(), (mTotalHeight - mLMargin).toFloat())
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawProgress(canvas)
         drawLeafs(canvas)

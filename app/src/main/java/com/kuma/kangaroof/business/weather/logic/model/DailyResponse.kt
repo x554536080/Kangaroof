@@ -26,10 +26,16 @@ data class DailyResponse(val status: String, val result: Result) {
 
     data class LifeIndex(
         val coldRisk: List<LifeDescription>,
-        val carWashing: List<LifeDescription>, val ultraviolet: List<LifeDescription>,
-        val dressing: List<LifeDescription>
+        val carWashing: List<LifeDescription>, val ultraviolet: List<UltraViolet>,
+        val dressing: List<Dressing>
     )
 
     data class LifeDescription(val desc: String)
+
+
+    data class UltraViolet(val desc: String)//其实从JSON的数据格式来看，下面的两个类均为LifeDescription也可，只是为了验证
+
+    data class Dressing(val desc: String)
+
 
 }

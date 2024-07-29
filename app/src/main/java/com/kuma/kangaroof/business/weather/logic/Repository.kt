@@ -9,8 +9,10 @@ import com.xds.mvvmdemo.logic.network.MVVMDemoNetwork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import retrofit2.await
 import java.lang.Exception
 import java.lang.RuntimeException
+import kotlin.coroutines.CoroutineContext
 
 /**
  * # ******************************************************************
@@ -32,9 +34,9 @@ object Repository {
     fun refreshWeather(lng: String, lat: String) = liveData(Dispatchers.IO) {
         val result = try {
             coroutineScope {
-                val deferredRealTime = async { MVVMDemoNetwork.getRealtimeWeather(lng, lat) }
+//                val deferredRealTime = async { MVVMDemoNetwork.weatherService.getRealtimeWeather(lng,lat) }
                 val deferredDaily = async { MVVMDemoNetwork.getDailyWeather(lng, lat) }
-                val realtimeResponse = deferredRealTime.await()
+                val realtimeResponse = MVVMDemoNetwork.weatherService.getRealtimeWeather(lng,lat).await()
                 val dailyResponse = deferredDaily.await()
                 if (realtimeResponse.status == "ok" && dailyResponse.status == "ok") {
                     val weather = Weather(
@@ -70,21 +72,21 @@ object Repository {
             Result.failure(e)
         }
 
-        val places = mutableListOf<Place>()
-        places.add(Place("南京市", Location("118.2200", "31.1400"), "江苏省南京市"))
-        val resultDemo = Result.success(places)
-        emit(resultDemo)
-//        emit(result)
+//        val places = mutableListOf<Place>()
+//        places.add(Place("南京市", Location("118.2200", "31.1400"), "江苏省南京市"))
+//        val resultDemo = Result.success(places)
+//        emit(resultDemo)
+        emit(result)
     }
 
 //不知道为什么 这个fire函数用不了，还没返回到上面就直接触发observe了
-//    private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
-//        liveData<Result<T>>(context) {
-//            val result = try {
-//                block()
-//            } catch (e: Exception) {
-//                Result.failure<T>(e)
-//            }
-//            emit(result)
-//        }
+    private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
+        liveData<Result<T>>(context) {
+            val result = try {
+                block()
+            } catch (e: Exception) {
+                Result.failure<T>(e)
+            }
+            emit(result)
+        }
 }

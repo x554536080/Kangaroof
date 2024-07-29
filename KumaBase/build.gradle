@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 34
 
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 24
         targetSdkVersion 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -24,8 +25,17 @@ android {
         }
     }
 
-    sourceSets{
+    sourceSets {
         main.jniLibs.srcDirs = ['libs']
+    }
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+    }
+    buildFeatures {
+        dataBinding = true
+//        viewBinding = true
     }
 }
 
@@ -39,11 +49,18 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
+    api "androidx.room:room-runtime:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
+//    ksp "androidx.room:room-compiler:2.6.1"
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     api 'com.blankj:utilcode:1.22.7'
     api 'com.google.guava:guava:27.0.1-android'
-    api 'com.squareup.retrofit2:retrofit:2.6.1'
-    api 'com.squareup.retrofit2:converter-gson:2.6.1'
+    api 'com.squareup.retrofit2:retrofit:2.6.0'
+    api 'com.squareup.retrofit2:converter-gson:2.6.0'
+    api 'com.squareup.retrofit2:adapter-rxjava:2.6.0'
+
+    implementation rootProject.ext.depsLibs["arouterApi"]
+    annotationProcessor rootProject.ext.depsLibs["arouterCompiler"]
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

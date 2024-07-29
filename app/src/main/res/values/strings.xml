@@ -3,9 +3,11 @@
 
     <!--主页功能-->
     <string name="main_func_1">天气预报</string>
-    <string name="main_func_2">飞叶读条</string>
-    <string name="main_func_3">更换背景</string>
-    <string name="main_func_4">播放视频</string>
+    <string name="main_func_2">穿搭知识库</string>
+    <string name="main_func_3">飞叶读条</string>
+    <string name="main_func_4">更换背景</string>
+    <string name="main_func_5">播放视频</string>
+    <!--    <string name="main_func_5">特性测试</string>-->
     <!--设置页面Group-->
     <string name="info_settings">个人资料</string>
     <string name="app_settings">应用</string>

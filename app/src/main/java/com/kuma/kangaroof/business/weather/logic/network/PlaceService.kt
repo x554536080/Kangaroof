@@ -17,7 +17,7 @@ import retrofit2.http.Query
  */
 interface PlaceService {
 
-    @GET("v2.5/places?token=${KangaroofApp.WEATHER_TOKEN}&lang=zh_CN")
+    @GET("v2/place?token=${KangaroofApp.WEATHER_TOKEN}&lang=zh_CN")
     fun searchPlaces(@Query("query") query: String): Call<PlaceResponse>
 
 }

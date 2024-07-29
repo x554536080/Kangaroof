@@ -2,28 +2,27 @@ package com.kuma.kangaroof.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
-import com.kuma.base.util.CameraUtils
 import com.kuma.kangaroof.LeafActivity
 import com.kuma.kangaroof.PlayerActivity
 import com.kuma.kangaroof.R
-import com.kuma.kangaroof.ScrollViewRecyclerViewTestActivity
 import com.kuma.kangaroof.business.weather.WeatherMainActivity
-import com.kuma.kangaroof.business.weather.ui.weather.WeatherActivity
-import com.kuma.kangaroof.databinding.FragmentIndividualBinding
 import com.kuma.kangaroof.databinding.FragmentMainBinding
-import com.kuma.kangaroof.test.TestIndexActivity
+import com.kuma.viewcomponents.views.KumaImageView
+
+//import com.kuma.viewcomponents.views.KumaImageView
 
 
 /**
@@ -75,7 +74,10 @@ class MainFragment : Fragment() {
         button2!!.setOnClickListener(onClickListener)
         button3!!.setOnClickListener(onClickListener)
         button4!!.setOnClickListener(onClickListener)
+        button4!!.setOnClickListener(onClickListener)
         button5!!.setOnClickListener(onClickListener)
+
+        val view = KumaImageView(requireContext())
 
         mTitle = getView()?.findViewById(R.id.main_title)
         mAppBarLayout = requireView().findViewById(R.id.main_appBar)
@@ -135,7 +137,7 @@ class MainFragment : Fragment() {
     }
 
     class MyVH(view: View) : RecyclerView.ViewHolder(view) {
-val bt = view
+        val bt = view
 
     }
 

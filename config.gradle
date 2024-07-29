@@ -1,0 +1,17 @@
+ext {
+
+    dependVersion = [
+            arouterApiVersion     : '1.5.2',
+            arouterCompilerVersion: '1.5.2',
+            refreshVersion        : '2.0.5',
+    ]
+
+    depsLibs = [
+            arouterApi     : "com.alibaba:arouter-api:${dependVersion["arouterApiVersion"]}",
+            arouterCompiler: "com.alibaba:arouter-compiler:${dependVersion["arouterCompilerVersion"]}",
+
+            refreshLayout  : "io.github.scwang90:refresh-layout-kernel:${dependVersion["refreshVersion"]}",
+            refreshHeader  : "io.github.scwang90:refresh-header-classics:${dependVersion["refreshVersion"]}",
+            refreshFooter  : "io.github.scwang90:refresh-footer-classics:${dependVersion["refreshVersion"]}",
+    ]
+}
